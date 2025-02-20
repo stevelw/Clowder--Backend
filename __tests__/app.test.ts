@@ -20,19 +20,6 @@ afterAll(() => {
 describe('🧪 Express Application', () => {
 	describe('Root', () => {
 		describe('GET /api', () => {
-			it('200: should return a successful response', () => {
-				return request(app)
-					.get('/api')
-					.expect(200)
-					.then(({ body }) => {
-						expect(body).toEqual({
-							success: true,
-						});
-					});
-			});
-		});
-
-		describe('GET /api/endpoints', () => {
 			const expectedData = {};
 			endpointsJson.forEach((endpoint) => {
 				const copy = JSON.parse(JSON.stringify(endpoint));
@@ -45,11 +32,32 @@ describe('🧪 Express Application', () => {
 			});
 			it('200: should return a successful response', () => {
 				return request(app)
-					.get('/api/endpoints')
+					.get('/api')
 					.expect(200)
 					.then(({ body: { success, data } }) => {
 						expect(success).toBe(true);
-						expect(data).toEqual(expectedData);
+						expect(data).toMatchObject({ endpoints: expect.any(Array) });
+						data.endpoints.forEach(
+							(endpoint: {
+								method: string;
+								exampleResponse: object | string;
+							}) => {
+								expect(endpoint).toMatchObject({
+									path: expect.any(String),
+									description: expect.any(String),
+									method: expect.any(String),
+									authentication: expect.any(String),
+								});
+								expect(['GET', 'POST', 'PATCH', 'DELETE']).toContain(
+									endpoint.method
+								);
+								expect(endpoint).toHaveProperty('exampleResponse');
+								expect(
+									typeof endpoint.exampleResponse === 'object' ||
+										typeof endpoint.exampleResponse === 'string'
+								).toBeTruthy();
+							}
+						);
 					});
 			});
 		});

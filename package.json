@@ -41,7 +41,7 @@
 		"lint-staged": "^15.2.10",
 		"nodemon": "^3.1.7",
 		"prettier": "3.4.2",
-		"prisma": "^6.1.0",
+		"prisma": "^7.2.0",
 		"prisma-json-types-generator": "^4.0.1",
 		"supertest": "^7.0.0",
 		"ts-jest": "^29.2.5",

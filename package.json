@@ -52,7 +52,7 @@
 	"dependencies": {
 		"@prisma/client": "^6.1.0",
 		"cors": "^2.8.5",
-		"express": "^4.21.1"
+		"express": "^5.2.1"
 	},
 	"prisma": {
 		"seed": "npx tsx prisma/seed.ts"
